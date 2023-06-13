@@ -19,6 +19,7 @@ use Composer\Repository\RepositoryManager;
 use Composer\Repository\WritableArrayRepository;
 use Composer\Script\ScriptEvents;
 use Composer\Util\HttpDownloader;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use SLLH\ComposerVersionsCheck\VersionsCheckPlugin;
 use Symfony\Component\Console\Input\ArrayInput;
@@ -35,7 +36,7 @@ class VersionsCheckPluginTest extends TestCase
     private $io;
 
     /**
-     * @var Composer|\PHPUnit_Framework_MockObject_MockObject
+     * @var Composer|MockObject
      */
     private $composer;
 
@@ -76,16 +77,20 @@ class VersionsCheckPluginTest extends TestCase
      */
     public function testOptions($configData, array $expectedOptions)
     {
+        // Arrange
         if (null === $configData) {
             $this->composer->expects($this->any())->method('getConfig')
-                ->willReturn(null);
+                ->willReturn(new Config());
         } else {
             $this->config->merge($configData);
         }
 
         $plugin = new VersionsCheckPlugin();
+
+        // Act
         $plugin->activate($this->composer, $this->io);
 
+        // Assert
         $this->assertSame($expectedOptions, $plugin->getOptions());
     }
 

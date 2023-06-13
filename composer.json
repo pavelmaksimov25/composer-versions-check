@@ -1,5 +1,5 @@
 {
-    "name": "sllh/composer-versions-check",
+    "name": "pavelmaksimov25/composer-versions-check",
     "description": "Checks if packages are up to date to last major versions after update",
     "keywords": ["composer", "plugin", "update", "versions"],
     "type": "composer-plugin",
@@ -8,6 +8,10 @@
         {
             "name": "Sullivan SENECHAL",
             "email": "soullivaneuh@gmail.com"
+        },
+        {
+            "name": "Pavlo Maksymov",
+            "email": "pavlo.maksymov@spryker.com"
         }
     ],
     "require": {
@@ -18,22 +22,26 @@
     },
     "require-dev": {
         "composer/composer": "^2.0",
-        "symfony/phpunit-bridge": "^5.3.3"
+        "symfony/phpunit-bridge": "^5.3.3",
+        "phpunit/phpunit": "^9.6"
     },
     "autoload": {
         "psr-4": {
-            "SLLH\\ComposerVersionsCheck\\": "src/"
+            "ComposerVersionsCheck\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "SLLH\\ComposerVersionsCheck\\Tests\\": "tests/"
+            "ComposerVersionsCheck\\Tests\\": "tests/"
         }
     },
     "extra": {
-        "class": "SLLH\\ComposerVersionsCheck\\VersionsCheckPlugin",
+        "class": "ComposerVersionsCheck\\VersionsCheckPlugin",
         "branch-alias": {
-            "dev-master": "2.x-dev"
+            "dev-master": "1.x-dev"
         }
+    },
+    "scripts": {
+        "tests": "vendor/bin/phpunit tests/"
     }
 }

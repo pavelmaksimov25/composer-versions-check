@@ -174,7 +174,15 @@ EOF
         $this->localRepository->addPackage(new Package('foo/bar', '1.1', '1.1'));
 
         $linkedPackage = new Package('dummy/link', '1.0', '1.0');
-        $linkedPackage->setRequires(array(new Link('dummy/link', 'foo/bar', new Constraint(Constraint::STR_OP_GT, '1.0'), '', '1.*')));
+        $linkedPackage->setRequires([
+            'dummy/link' => new Link(
+                'dummy/link',
+                'foo/bar',
+                new Constraint(Constraint::STR_OP_GT, '1.0'),
+                '',
+                '1.*'
+            ),
+        ]);
         $this->localRepository->addPackage($linkedPackage);
 
         // To test root package detection
