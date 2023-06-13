@@ -8,6 +8,7 @@ use Composer\Package\LinkConstraint\VersionConstraint;
 use Composer\Package\PackageInterface;
 use Composer\Package\RootPackageInterface;
 use Composer\Repository\ArrayRepository;
+use Composer\Repository\RepositoryInterface;
 use Composer\Repository\WritableRepositoryInterface;
 use Composer\Semver\Comparator;
 use Composer\Semver\Constraint\Constraint;
@@ -22,7 +23,7 @@ final class VersionsCheck
      */
     private $outdatedPackages = array();
 
-    public function checkPackages(ArrayRepository $distRepository, WritableRepositoryInterface $localRepository, RootPackageInterface $rootPackage)
+    public function checkPackages(RepositoryInterface $distRepository, WritableRepositoryInterface $localRepository, RootPackageInterface $rootPackage)
     {
         $packages = $localRepository->getPackages();
         foreach ($packages as $package) {
@@ -50,7 +51,7 @@ final class VersionsCheck
             if (\count($higherPackages) > 0) {
                 // Sort packages by highest version to lowest
                 usort($higherPackages, function (PackageInterface $p1, PackageInterface $p2) {
-                    return Comparator::compare($p1->getVersion(), '<', $p2->getVersion());
+                    return Comparator::compare($p1->getVersion(), '<', $p2->getVersion()) ? 1 : -1;
                 });
 
                 // Push actual and last package on outdated array
